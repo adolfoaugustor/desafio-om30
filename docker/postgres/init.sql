@@ -1,0 +1,2 @@
+CREATE DATABASE medicos_db;
+GRANT ALL PRIVILEGES ON DATABASE medicos_db TO postgres;
