@@ -4,19 +4,18 @@
 ### Passo a passo para instalação
 Clone Repositório
 ```sh
-git clone laravel.git my-project
-cd my-project/
+git clone https://github.com/adolfoaugustor/desafio-om30 desafio-om30-Adolfo
+cd desafio-om30-Adolfo/
 ```
 
 
 Crie o Arquivo .env
 ```sh
-cd example-project/
 cp .env.example .env
 ```
 
 
-Atualize as variáveis de ambiente do arquivo .env
+Confirme as variáveis de ambiente do arquivo .env 
 ```dosini
 APP_NAME=Medicos
 APP_URL=http://localhost:8000
