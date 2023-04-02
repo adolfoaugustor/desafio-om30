@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
-use Carbon\Carbon;
 use App\Rules\CnsRule;
 use App\Models\Address;
 use App\Models\Patient;
@@ -14,21 +13,22 @@ use Illuminate\Support\Facades\Validator;
 
 class PatientController extends Controller
 {
-    public function version()
+    public function index(Request $request)
     {
-        $version = '1.0';
+        $query = Patient::query();
 
-        return response()->json([
-            'success' => true,
-            'version' => $version,
-        ]);
-    }
+        if ($request->has('search')) {
+            $search = $request->input('search');
 
-    public function index()
-    {
-        $patients = Patient::with('address')->get();
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                ->orWhere('cpf', 'like', '%'.$search.'%');
+            })->with('address');
+        }
 
-        return response()->json(['patients' => $patients], 200);
+        $patients = $query->paginate(10);
+
+        return response()->json($patients);
     }
     
     public function store(Request $request)

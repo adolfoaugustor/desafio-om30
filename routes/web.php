@@ -12,6 +12,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::redirect('/', '/api/version');
-Route::redirect('/api', '/api/version');
