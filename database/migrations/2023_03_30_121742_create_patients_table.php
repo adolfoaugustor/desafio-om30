@@ -19,10 +19,8 @@ class CreatePatientsTable extends Migration
             $table->string('name');
             $table->string('name_mother');
             $table->date('date_birth');
-            $table->string('cpf')->unique();
-            $table->string('cns')->unique();
-            $table->unsignedBigInteger('address_id')->nullable();
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
+            $table->string('cpf',11)->unique();
+            $table->string('cns', 18)->unique();
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ APP_NAME=Medicos
 APP_URL=http://localhost:8000
 
 DB_CONNECTION=pgsql
+# verifique o ip da maquina docker desafio-om30_postgres_1
 DB_HOST=172.26.0.2
 DB_PORT=5432
 DB_DATABASE=medicos_db
@@ -58,6 +59,11 @@ composer install
 Gerar a key do projeto Laravel
 ```sh
 php artisan key:generate
+```
+
+Rodas scripts do banco de dados
+```sh
+php artisan migrate
 ```
 
 

@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/version', [App\Http\Controllers\Api\PatientController::class, 'version']);
-Route::post('/patients', [App\Http\Controllers\Api\PatientController::class, 'store']);
-Route::get('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'show']);
 Route::get('/patients', [App\Http\Controllers\Api\PatientController::class, 'index']);
-
+Route::get('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'show']);
+Route::post('/patients', [App\Http\Controllers\Api\PatientController::class, 'store']);
+Route::put('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'update']);
+Route::delete('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'destroy']);

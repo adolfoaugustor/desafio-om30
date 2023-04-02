@@ -22,6 +22,9 @@ class CreateAddressesTable extends Migration
             $table->string('district');
             $table->string('city');
             $table->string('state');
+
+            $table->unsignedBigInteger('patient_id');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->timestamps();
         });
     }

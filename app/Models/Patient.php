@@ -18,8 +18,20 @@ class Patient extends Model
         'cns'
     ];
 
+    protected $dates = ['date_birth'];
+
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function setDateBirthAttribute($value)
+    {
+        $this->attributes['date_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+
+    public function getDateBirthAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d/m/Y');
     }
 }
