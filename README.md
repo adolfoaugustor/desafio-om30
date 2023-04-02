@@ -7,7 +7,8 @@ Clone Repositório
 git clone https://github.com/adolfoaugustor/desafio-om30 desafio-om30-Adolfo
 cd desafio-om30-Adolfo/
 ```
-
+Foi usado 
+[GitFlow](http://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html) para trabalhar organização do projeto.
 
 Crie o Arquivo .env
 ```sh
