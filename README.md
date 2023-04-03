@@ -7,7 +7,8 @@ Clone Repositório
 git clone https://github.com/adolfoaugustor/desafio-om30 desafio-om30-Adolfo
 cd desafio-om30-Adolfo/
 ```
-
+Foi usado 
+[GitFlow](http://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html) para trabalhar organização do projeto.
 
 Crie o Arquivo .env
 ```sh
@@ -66,6 +67,46 @@ Rodas scripts do banco de dados
 php artisan migrate
 ```
 
+Publicar arquivos para importar CSV
+```sh
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+```
 
 Acesse o projeto
 [http://localhost:8000](http://localhost:8000)
+
+
+# Install supervisor
+
+Acessar a maquina docker do laravel, como root:
+```sh
+docker exec -u root -it desafio-om30_laravel_8_1 /bin/bash
+```
+Atualiza maquina e instala o supervisor
+```sh
+apt-get update
+
+apt-get install supervisor
+```
+
+Acessa pasta do supervisor
+```sh
+cd /etc/supervisor/
+```
+Cria um arquivo de configuração
+```sh
+touch supervisord.conf
+```
+
+E adicionar o seguinte script ao arquivo.
+```sh
+echo '[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/artisan queue:work --tries=3
+autostart=true
+autorestart=true
+user=root
+numprocs=4
+redirect_stderr=true
+stdout_logfile=/var/www/storage/logs/worker.log' > laravel.conf
+```

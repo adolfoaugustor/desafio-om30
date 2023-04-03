@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,11 +28,11 @@ class Patient extends Model
 
     public function setDateBirthAttribute($value)
     {
-        $this->attributes['date_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+        $this->attributes['date_birth'] = Carbon::createFromFormat('d/m/Y', $value, 'UTC')->format('Y-m-d');
     }
 
     public function getDateBirthAttribute($value)
     {
-        return \Carbon\Carbon::parse($value)->format('d/m/Y');
+        return Carbon::parse($value)->format('d/m/Y');
     }
 }
