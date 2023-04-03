@@ -67,6 +67,10 @@ Rodas scripts do banco de dados
 php artisan migrate
 ```
 
+Publicar arquivos para importar CSV
+```sh
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+```
 
 Acesse o projeto
 [http://localhost:8000](http://localhost:8000)

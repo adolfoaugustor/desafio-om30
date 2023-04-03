@@ -27,3 +27,5 @@ Route::put('/patients/{id}', [App\Http\Controllers\Api\PatientController::class,
 Route::delete('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'destroy']);
 
 Route::get('/cep/{cep}', [App\Http\Controllers\Api\CepController::class, 'consult']);
+
+Route::post('/patients/import', [App\Http\Controllers\Api\ImportController::class, 'import']);
