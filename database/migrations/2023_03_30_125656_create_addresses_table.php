@@ -24,7 +24,11 @@ class CreateAddressesTable extends Migration
             $table->string('state');
 
             $table->unsignedBigInteger('patient_id');
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreign('patient_id')
+                ->references('id')
+                ->on('patients')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

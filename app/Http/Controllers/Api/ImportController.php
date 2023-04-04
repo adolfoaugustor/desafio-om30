@@ -35,7 +35,6 @@ class ImportController extends Controller
                 $newPatient = $patient;
 
             }
-            dd($newPatient);
         }
 
         return response()->json(['message' => 'Importação realizada com sucesso.'], 200);

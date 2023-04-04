@@ -15,7 +15,7 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Patient::query();
+        $query = Patient::query()->with('address');
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -23,7 +23,7 @@ class PatientController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('name', 'like', '%'.$search.'%')
                 ->orWhere('cpf', 'like', '%'.$search.'%');
-            })->with('address');
+            });
         }
 
         $patients = $query->paginate(10);
@@ -109,42 +109,43 @@ class PatientController extends Controller
     public function update(Request $request, $id)
     {
         $patient = Patient::findOrFail($id);
-    
-        // Validação dos dados recebidos
-        $validator = Validator::make($request->all(), [
-            'name'        => 'required|string|max:255',
-            'name_mother' => 'required|string|max:255',
-            'date_birth'  => 'required|date_format:d/m/Y',
+        $address = Address::where('patient_id', $patient->id)->firstOrFail();
 
-            'zip_code'    => 'required|string|max:9',
-            'address'     => 'required|string|max:255',
-            'number'      => 'required|string|max:10',
-            'complement'  => 'nullable|string|max:255',
-            'district'    => 'required|string|max:255',
-            'city'        => 'required|string|max:255',
-            'state'       => 'required|string|max:2',
+        $validator = Validator::make($request->all(), [
+            'name'          => ['required','string','max:255'],
+            'name_mother'   => ['required','string','max:255'],
+            'date_birth'    => ['required'],
+            'image_patient' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            # Address
+            'zip_code'      => ['required','string','max:9'],
+            'address'       => ['required','string','max:255'],
+            'number'        => ['required','numeric'],
+            'complement'    => ['nullable','string','max:255'],
+            'district'      => ['required','string','max:255'],
+            'city'          => ['required','string','max:255'],
+            'state'         => ['required','string','max:2'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $patient->name = $request->input('name');
-        $patient->name_mother = $request->input('name_mother');
-        $patient->date_birth = $request->input('date_birth');
+        $patient->name          = $request->name;
+        $patient->name_mother   = $request->name_mother;
+        $patient->date_birth    = $request->date_birth;
+        $patient->image_patient = $request->image_patient;
         $patient->save();
 
-        $address = $patient->address;
-        $address->zip_code = $request->input('zip_code');
-        $address->address = $request->input('address');
-        $address->number = $request->input('number');
-        $address->complement = $request->input('complement');
-        $address->district = $request->input('district');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
+        $address->zip_code  = $request->zip_code;
+        $address->address   = $request->address;
+        $address->number    = $request->number;
+        $address->complement = $request->complement;
+        $address->district  = $request->district;
+        $address->city      = $request->city;
+        $address->state     = $request->state;
         $address->save();
 
-        return response()->json(['patient' => $patient], 200);
+        return response()->json(['message' => 'Paciente atualizado com sucesso'], 200);
     }
 
     public function destroy($id)

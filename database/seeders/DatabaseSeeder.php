@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        \App\Models\Patient::factory(5)->create();
+    //    \App\Models\Address::factory()->create();
         $this->call(PatientsSeeder::class);
     }
 }

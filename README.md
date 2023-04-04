@@ -110,3 +110,16 @@ numprocs=4
 redirect_stderr=true
 stdout_logfile=/var/www/storage/logs/worker.log' > laravel.conf
 ```
+
+```sh
+php artisan db:seed
+```
+
+```sh
+php artisan migrate:fresh
+```
+
+# Run testes
+```sh
+php artisan test
+```

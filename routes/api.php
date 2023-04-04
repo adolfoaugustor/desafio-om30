@@ -20,7 +20,7 @@ Route::get('/', function () {
       'version' => "1.0.1"
   ]);
 });
-Route::get('/patients', [App\Http\Controllers\Api\PatientController::class, 'index']);
+Route::get('/patients', [App\Http\Controllers\Api\PatientController::class, 'index'])->name('patients.index');
 Route::get('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'show']);
 Route::post('/patients', [App\Http\Controllers\Api\PatientController::class, 'store']);
 Route::put('/patients/{id}', [App\Http\Controllers\Api\PatientController::class, 'update']);

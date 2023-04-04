@@ -21,7 +21,7 @@ Sua aplicação deve:
    Desenvolver uma listagem de pacientes com busca, do qual deve-se permitir a adição, edição, visualização e exclusão de cada um dos pacientes.
    Cada paciente deve ter um endereço cadastrado em uma tabela à parte.
    Utilizar para banco de dados PostgreSQL e Redis (Cache e Queue).
-   Utilizar migration, factory, faker e seeder.
+   ok - Utilizar migration, factory, faker e seeder.
    
    ok - Criar um endpoint para listagem onde seja possível consultar pacientes pelo nome ou CPF.
 
