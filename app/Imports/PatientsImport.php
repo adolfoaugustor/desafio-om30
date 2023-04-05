@@ -33,7 +33,13 @@ class PatientsImport implements ToModel, WithHeadingRow, WithMultipleSheets, Wit
         'date_birth',
         'cpf',
         'cns',
-        'image_patient'
+        'zip_code',
+        'address',
+        'number',
+        'district',
+        'city',
+        'state',
+        'complement'
     ];
 
     public function mapping(): array
@@ -44,7 +50,13 @@ class PatientsImport implements ToModel, WithHeadingRow, WithMultipleSheets, Wit
             'date_birth' => 'C1',
             'cpf' => 'D1',
             'cns' => 'E1',
-            'image_patient' => 'F1',
+            'zip_code' => 'F1',
+            'address' => 'G1',
+            'number' => 'H1',
+            'district' => 'I1',
+            'city' => 'J1',
+            'state' => 'K1',
+            'complement' => 'L1'
         ];
     }
 
@@ -57,7 +69,13 @@ class PatientsImport implements ToModel, WithHeadingRow, WithMultipleSheets, Wit
                 'date_birth'    => strval($row['date_birth']),
                 'cpf'           => strval($row['cpf']),
                 'cns'           => strval($row['cns']),
-                'image_patient' => strval($row['image_patient'])
+                'zip_code'      => strval($row['zip_code']),
+                'address'       => strval($row['address']),
+                'number'        => strval($row['number']),
+                'district'      => strval($row['district']),
+                'city'          => strval($row['city']),
+                'state'         => strval($row['state']),
+                'complement'    => strval($row['complement'])
             ]);
             $this->models[] = $patient;
         }

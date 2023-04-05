@@ -9,26 +9,30 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Patient::query()->with('address');
+        $query = Patient::query();
 
         if ($request->has('search')) {
-            $search = $request->input('search');
-
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', '%'.$search.'%')
-                ->orWhere('cpf', 'like', '%'.$search.'%');
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%")
+                    ->orWhere('cpf', 'LIKE', "%$search%");
             });
         }
+        $query->with('address');
 
-        $patients = $query->paginate(10);
+        $cacheKey = 'patients:' . md5($request->fullUrl());
+        $patients = Cache::remember($cacheKey, 4200, function () use ($query) {
+            return $query->paginate(10);
+        });        
 
-        return response()->json($patients);
+        return response()->json($patients, 200);
     }
     
     public function store(Request $request)
