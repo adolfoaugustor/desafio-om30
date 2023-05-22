@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
+use Carbon\Carbon;
 use App\Rules\CnsRule;
 use App\Models\Address;
 use App\Models\Patient;
@@ -72,7 +73,7 @@ class PatientController extends Controller
             }
             $patient->name = $request->name;
             $patient->name_mother = $request->name_mother;
-            $patient->date_birth = $request->date_birth;
+            $patient->date_birth = Carbon::createFromFormat('d/m/Y', $request->date_birth, 'UTC')->format('Y-m-d');
             $patient->cpf = $request->cpf;
             $patient->cns = $request->cns;
             $patient->save();
@@ -136,7 +137,7 @@ class PatientController extends Controller
 
         $patient->name          = $request->name;
         $patient->name_mother   = $request->name_mother;
-        $patient->date_birth    = $request->date_birth;
+        $patient->date_birth    = Carbon::createFromFormat('d/m/Y', $request->date_birth, 'UTC')->format('Y-m-d');
         $patient->image_patient = $request->image_patient;
         $patient->save();
 
