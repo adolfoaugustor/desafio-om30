@@ -26,10 +26,11 @@ class Patient extends Model
         return $this->hasOne(Address::class);
     }
 
-    // public function setDateBirthAttribute($value)
-    // {
-    //     $this->attributes['date_birth'] = Carbon::createFromFormat('d/m/Y', $value, 'UTC')->format('Y-m-d');
-    // }
+    public function setDateBirthAttribute($value)
+    {
+        $this->attributes['date_birth'] = Carbon::createFromFormat(
+            'd/m/Y', $value, 'UTC')->format('Y-m-d');
+    }
 
     public function getDateBirthAttribute($value)
     {

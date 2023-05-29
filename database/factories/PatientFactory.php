@@ -25,7 +25,7 @@ class PatientFactory extends Factory
         return [
             'name' => $this->faker->name,
             'name_mother' => $this->faker->name,
-            'date_birth' => $this->faker->date('Y-m-d'),
+            'date_birth' => $this->faker->date('d/m/Y'),
             'cpf' => $this->faker->unique()->numerify('###########'),
             'cns' => $this->faker->unique()->numerify('### #### #### ####'),
             'image_patient' => $this->faker->image

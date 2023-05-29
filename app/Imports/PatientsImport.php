@@ -4,7 +4,9 @@ namespace App\Imports;
 
 use Carbon\Carbon;
 use App\Models\Patient;
+use App\Models\Address;
 use Maatwebsite\Excel\Concerns\ToModel;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class PatientsImport implements ToModel, WithHeadingRow
@@ -16,21 +18,28 @@ class PatientsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        return new Patient([
-            'name'          => strval($row['name']),
-            'name_mother'   => strval($row['name_mother']),
-            'date_birth'    => $this->convertDateOfBirth($row['date_birth']),
-            // 'date_birth'    => strval($row['date_birth']),
-            'cpf'           => strval($row['cpf']),
-            'cns'           => strval($row['cns']),
-            'zip_code'      => strval($row['zip_code']),
-            'address'       => strval($row['address']),
-            'number'        => strval($row['number']),
-            'district'      => strval($row['district']),
-            'city'          => strval($row['city']),
-            'state'         => strval($row['state']),
-            'complement'    => strval($row['complement']),
+        $patient = new Patient([
+            'name' => $row['name'],
+            'name_mother' => $row['name_mother'],
+            'date_birth' => Date::excelToDateTimeObject($row['date_birth'])->format('d/m/Y'),
+            'cpf' => $row['cpf'],
+            'cns' => $row['cns'],
         ]);
+        $patient->save(); 
+
+        $address = new Address([
+            'zip_code' => $row['zip_code'],
+            'address' => $row['address'],
+            'number' => $row['number'],
+            'district' => $row['district'],
+            'city' => $row['city'],
+            'state' => $row['state'],
+            'complement' => $row['complement'],
+            'patient_id' => $patient->id,
+        ]);
+        $patient->address()->save($address);
+
+        $newPatients[] = ['patient' => $patient, 'address' => $address];
     }
 
     private function convertDateOfBirth($value)
